@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CES211 CBT — 100 Questions</title>
+<style>
+:root {
+  --bg:#f4f7fb; --card:#fff; --text:#172033; --muted:#687386;
+  --primary:#2457d6; --primary2:#173b99; --border:#dfe5ef;
+  --good:#16834b; --bad:#c83b4b; --shadow:0 10px 30px rgba(20,35,70,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button{font:inherit;cursor:pointer}
+.app{max-width:1050px;margin:auto;padding:22px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}
+.brand{font-weight:800;font-size:20px}
+.badge{font-size:13px;background:#eaf0ff;color:var(--primary2);padding:7px 11px;border-radius:999px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:26px}
+.hidden{display:none!important}
+h1{margin:0 0 10px;font-size:32px}
+h2{margin:0 0 12px}
+p{line-height:1.6}
+.center{text-align:center}
+.hero{padding:45px 25px}
+.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:800;background:var(--primary);color:white}
+.btn:hover{background:var(--primary2)}
+.btn.secondary{background:#e9edf5;color:var(--text)}
+.btn.danger{background:#c83b4b}
+.actions{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+.actions .right{display:flex;gap:10px}
+.course{border:2px solid var(--primary);background:#f3f6ff;padding:18px;border-radius:14px;margin:20px auto;max-width:420px}
+.instructions{text-align:left;max-width:700px;margin:20px auto}
+.instructions li{margin:10px 0}
+.timer{font-variant-numeric:tabular-nums;font-weight:900;font-size:24px;background:#111827;color:#fff;padding:9px 14px;border-radius:11px}
+.examhead{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}
+.progress{height:8px;background:#e7ebf2;border-radius:99px;overflow:hidden;margin-bottom:20px}
+.progress>div{height:100%;background:var(--primary);width:0}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:9px}
+.question{font-size:22px;font-weight:800;line-height:1.4;margin:15px 0 20px}
+.option{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0;background:#fff;transition:.15s}
+.option:hover{border-color:#9eb2e9;background:#f8faff}
+.option input{margin-top:4px;transform:scale(1.15)}
+.option.selected{border-color:var(--primary);background:#eef3ff}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;margin-top:20px}
+.grid button{border:1px solid var(--border);background:white;border-radius:8px;padding:8px 0;font-weight:700}
+.grid button.current{background:var(--primary);color:#fff;border-color:var(--primary)}
+.grid button.answered{box-shadow:inset 0 -3px 0 var(--good)}
+.legend{font-size:12px;color:var(--muted);margin-top:8px}
+.score{font-size:58px;font-weight:900;margin:10px 0}
+.review{margin-top:20px}
+.review-item{border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;background:#fff}
+.review-item.correct{border-left:5px solid var(--good)}
+.review-item.wrong{border-left:5px solid var(--bad)}
+.small{font-size:13px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.kpi{background:#f7f9fc;border:1px solid var(--border);padding:15px;border-radius:12px;text-align:center}
+.kpi strong{display:block;font-size:24px}
+@media(max-width:650px) {
+ .app{padding:12px} .card{padding:18px} h1{font-size:27px}
+ .question{font-size:19px} .grid{grid-template-columns:repeat(5,1fr)}
+ .examhead{align-items:flex-start} .timer{font-size:19px}
+ .kpis{grid-template-columns:1fr} .actions{flex-direction:column}
+ .actions .right{width:100%} .actions .right .btn{flex:1}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand">CES211 CBT</div>
+    <div class="badge">100 Questions • 50:00</div>
+  </div>
+
+  <section id="home" class="card hero center">
+    <h1>Entrepreneurship, Innovation & Venture Creation</h1>
+    <p>Computer-Based Test — CES211</p>
+    <div class="course"><strong>SELECT COURSE</strong><br><span style="font-size:25px">CES211</span></div>
+    <button class="btn" onclick="showInstructions()">Continue</button>
+  </section>
+
+  <section id="instructions" class="card hidden">
+    <h2>EXAM INSTRUCTIONS</h2>
+    <div class="instructions">
+      <ul>
+        <li>Choose the answer that best suits the question.</li>
+        <li>There are <strong>100 questions</strong>, selected across Chapters 1–10.</li>
+        <li>You have <strong>50 minutes</strong> to complete the CBT.</li>
+        <li>Use <strong>Next</strong> and <strong>Previous</strong> to move between questions.</li>
+        <li>Use the <strong>Question Grid</strong> to jump directly to any question.</li>
+        <li>Your selected answers are saved in this browser while the exam is open.</li>
+        <li>Submitting the exam will show your score and a question-by-question review.</li>
+        <li>This file works <strong>offline</strong>; no internet connection is required.</li>
+      </ul>
+    </div>
+    <div class="center"><button class="btn" onclick="startExam()">START EXAM</button></div>
+  </section>
+
+  <section id="exam" class="hidden">
+    <div class="card">
+      <div class="examhead">
+        <div><strong id="chapter"></strong><div class="small" id="counter"></div></div>
+        <div id="timer" class="timer">50:00</div>
+      </div>
+      <div class="progress"><div id="progress"></div></div>
+      <div class="meta"><span id="answeredText">0 answered</span><span>50:00 total</span></div>
+      <div id="question" class="question"></div>
+      <div id="options"></div>
+
+      <div class="actions">
+        <button class="btn secondary" onclick="previousQuestion()">← PREVIOUS</button>
+        <div class="right">
+          <button class="btn secondary" onclick="nextQuestion()">NEXT →</button>
+          <button class="btn danger" onclick="submitExam(false)">SUBMIT</button>
+        </div>
+      </div>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:25px 0 16px">
+      <strong>QUESTION GRID</strong>
+      <div id="grid" class="grid"></div>
+      <div class="legend">Blue = current question • Green line = answered</div>
+    </div>
+  </section>
+
+  <section id="result" class="card hidden center">
+    <h1>RESULT</h1>
+    <p>Your CES211 CBT has been submitted.</p>
+    <div id="score" class="score">0%</div>
+    <div class="kpis">
+      <div class="kpi"><strong id="correctKpi">0</strong>Correct</div>
+      <div class="kpi"><strong id="wrongKpi">0</strong>Wrong</div>
+      <div class="kpi"><strong id="unansweredKpi">0</strong>Unanswered</div>
+    </div>
+    <p id="resultMessage"></p>
+    <div class="actions">
+      <button class="btn secondary" onclick="restartExam()">RETAKE EXAM</button>
+      <button class="btn" onclick="showReview()">REVIEW ANSWERS</button>
+    </div>
+    <div id="review" class="review hidden"></div>
+  </section>
+</div>
+
+<script>
+const QUESTIONS = [{"chapter": "CHAPTER 1", "question": "What is a major purpose of entrepreneurship education?", "options": ["To prepare students only for traditional employment", "To cultivate an entrepreneurial mindset", "To eliminate practical learning", "To guarantee employment"], "answer": 1}, {"chapter": "CHAPTER 1", "question": "Which of the following is NOT identified as an essential lifelong skill developed through entrepreneurship education?", "options": ["Communication", "Adaptability", "Technical expertise", "Critical thinking"], "answer": 2}, {"chapter": "CHAPTER 1", "question": "How can entrepreneurship education encourage students to develop entrepreneurial skills?", "options": ["By engaging them in diverse learning experiences", "By limiting them to theoretical lectures", "By avoiding real-world problems", "By discouraging experimentation"], "answer": 0}, {"chapter": "CHAPTER 1", "question": "Entrepreneurship education helps cultivate an entrepreneurial mindset from what stage?", "options": ["Only after graduation", "Only in employment", "From a young age", "Only after starting a business"], "answer": 2}, {"chapter": "CHAPTER 1", "question": "Which approach would weaken entrepreneurship education?", "options": ["Practical learning", "Real-world applications", "Innovation activities", "Reducing the focus on practical, real-world applications"], "answer": 3}, {"chapter": "CHAPTER 1", "question": "Entrepreneurship education can increase students' willingness to become entrepreneurs by increasing their perceived what?", "options": ["Desirability and feasibility", "Salary and seniority", "Debt and taxation", "Dependence and conformity"], "answer": 0}, {"chapter": "CHAPTER 1", "question": "Which factor can motivate an individual to consider entrepreneurship?", "options": ["Job dissatisfaction and desire for better work-life balance", "Guaranteed promotion", "Avoidance of all responsibility", "Desire to eliminate learning"], "answer": 0}, {"chapter": "CHAPTER 1", "question": "Entrepreneurship education commonly develops which combination?", "options": ["Entrepreneurial mindset and adaptable skills", "Only accounting skills", "Only technical expertise", "Only memorization skills"], "answer": 0}, {"chapter": "CHAPTER 1", "question": "Which is NOT a normal aim of entrepreneurship education?", "options": ["Developing innovation", "Building adaptability", "Providing students with guaranteed job placements", "Encouraging opportunity recognition"], "answer": 2}, {"chapter": "CHAPTER 1", "question": "Entrepreneurship education can contribute to the workforce by fostering what?", "options": ["Innovation and adaptability", "Dependence on fixed routines", "Resistance to change", "Avoidance of new ideas"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "Which concept is closely associated with generating new ideas and introducing improvements?", "options": ["Consumption", "Creativity and innovation", "Sleep", "Fear"], "answer": 1}, {"chapter": "CHAPTER 2", "question": "The process of identifying and pursuing opportunities to create value is known as what?", "options": ["Entrepreneurship", "Consumption", "Bookkeeping", "Administration"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "An individual who identifies opportunities and organizes resources to create value is called an:", "options": ["Entrepreneur", "Auditor", "Consumer", "Creditor"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "Which of the following is a business activity?", "options": ["Producing and exchanging goods or services", "Sleeping", "Avoiding markets", "Ignoring customers"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "Innovation refers to:", "options": ["Introducing useful new ideas, products or processes", "Simply consuming products", "Avoiding change", "Borrowing money without a plan"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "Which characteristic is commonly associated with an entrepreneur?", "options": ["Being confident", "Avoiding all decisions", "Fear of every opportunity", "Refusing responsibility"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "Which factor can limit entrepreneurial activity?", "options": ["Lack of trust", "Opportunity recognition", "Experience", "Access to finance"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "Which resource category includes people and physical resources used in business?", "options": ["Human and non-human resources", "Only financial resources", "Only social resources", "Only cultural resources"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "What is a common objective of business activity?", "options": ["Profit", "Sleep", "Fear", "Consumption only"], "answer": 0}, {"chapter": "CHAPTER 2", "question": "Which theory emphasizes the entrepreneur's role in discovering and exploiting market opportunities through an Austrian perspective?", "options": ["Austrian Market Process", "Keynesian theory", "Anthropological theory", "Classicalist theory"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "Which concept is central to identifying and exploiting opportunities for new ventures?", "options": ["Entrepreneurship", "Consumption", "Accounting", "Taxation"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "An individual who creates or organizes a venture is called an:", "options": ["Entrepreneur", "Employee only", "Consumer", "Creditor"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "The process of improving the ability of businesses and ventures to grow is called:", "options": ["Enterprise development", "Consumption", "Bookkeeping", "Distribution"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "Which type of thinking involves questioning assumptions and evaluating evidence?", "options": ["Critical thinking", "Random thinking", "Passive thinking", "Routine thinking"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "Which type of thinking involves examining and learning from an experience?", "options": ["Reflective thinking", "Mechanical thinking", "Competitive thinking", "Financial thinking"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "Critical thinking can be improved by which action?", "options": ["Doing enough research", "Avoiding evidence", "Accepting every claim immediately", "Ignoring alternative views"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "Which process involves generating possibilities before selecting a solution?", "options": ["Exploration", "Bookkeeping", "Consumption", "Auditing"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "The ability to form new mental possibilities is associated with:", "options": ["Imagination", "Taxation", "Distribution", "Administration"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "Which type of thinking is strongly associated with generating original ideas?", "options": ["Creative thinking", "Routine thinking", "Passive thinking", "Compliance thinking"], "answer": 0}, {"chapter": "CHAPTER 3", "question": "An innovation that makes relatively small improvements to an existing product or process is called:", "options": ["Incremental innovation", "Disruptive innovation", "Total replacement", "Market withdrawal"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Cultural entrepreneurship focuses strongly on the relationship between entrepreneurship and:", "options": ["Culture", "Bookkeeping", "Tax collection", "Inventory only"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Which term describes entrepreneurship based on cultural products, values and creative activities?", "options": ["Cultural entrepreneurship", "Financial auditing", "Industrial accounting", "Consumer taxation"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Cultural values can influence entrepreneurship by shaping:", "options": ["How opportunities and products are understood", "Only bank balances", "Only tax rates", "Only office locations"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "How do artists and cultural entrepreneurs differ?", "options": ["Artists focus more on cultural production while cultural entrepreneurs distribute products/services along the cultural value chain", "Artists only manage banks while entrepreneurs only paint", "Artists sell only financial products", "There is no difference in their roles"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Which organization is associated with promoting investment in Nigeria?", "options": ["Nigerian Investment Promotion Commission", "Association of Nigerian Exporters", "Nigerian Export-Import Bank", "Youth Lens"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Which organization is associated with export promotion in Nigeria?", "options": ["Nigerian Export Promotion Council", "Nigerian Investment Promotion Commission", "Youth Lens", "State Committee on Export Promotion"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Which organization is associated with export processing zones in Nigeria?", "options": ["Nigerian Export Processing Zones Authority", "Association of Nigerian Exporters", "National Investment Promotion Commission", "Youth Lens"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Which group represents manufacturers in export-related activities?", "options": ["Manufacturers Association of Nigeria-Export Group", "Nigerian Export-Import Bank", "Youth Lens", "National Investment Promotion Commission"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Which organization is a non-governmental organization?", "options": ["A non-governmental organization", "A central bank ledger", "A tax invoice", "A product label"], "answer": 0}, {"chapter": "CHAPTER 4", "question": "Cultural entrepreneurship can help create what for entrepreneurs and creative businesses?", "options": ["Competitive advantage", "Guaranteed profit", "Automatic government employment", "Complete freedom from competition"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "Which is an important psychological consideration in understanding entrepreneurship?", "options": ["Psychological factors", "Only office location", "Only product packaging", "Only tax receipts"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "In a hierarchy of needs, individuals generally pursue basic needs before:", "options": ["Higher-level goals", "Any basic need", "All business debts", "Market failure"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "Which group can strongly influence an individual's entrepreneurial decisions?", "options": ["Friends and family", "Only competitors", "Only regulators", "Only suppliers"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "Business development involves a blend of sales, market research, relationship-building and:", "options": ["Strategic planning", "Sleep", "Consumption", "Tax avoidance"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "A business development strategy should be informed by:", "options": ["Strategic planning", "Random decisions", "Personal opinions only", "Guesswork"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "Business development teams should react strategically to:", "options": ["Market dynamics", "Fixed rules that never change", "Only internal gossip", "Nothing outside the business"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "A business plan should be:", "options": ["Compelling and credible", "Based only on personal opinions", "Unrelated to the business", "Impossible to evaluate"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "Which form of business is generally easy to form and is owned by one individual?", "options": ["Sole proprietorship", "Partnership", "Public corporation", "Cooperative only"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "In a sole proprietorship, the owner is generally:", "options": ["Liable for all debts incurred", "Never responsible for debts", "Responsible only for employee debts", "Protected from every business loss"], "answer": 0}, {"chapter": "CHAPTER 5", "question": "A deliberate and strategic approach to business development helps an organization:", "options": ["Plan and pursue growth opportunities", "Guarantee success", "Eliminate all risk", "Avoid customers"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "Which leadership approach emphasizes inspiring people toward a vision and change?", "options": ["Transformational leadership", "Bookkeeping", "Centralized accounting", "Inventory control"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "Which ability helps leaders understand and manage emotions effectively?", "options": ["Emotional intelligence", "Bookkeeping", "Auditing", "Taxation"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "A major role of leadership is:", "options": ["Achieving specific objectives", "Avoiding objectives", "Eliminating teamwork", "Ignoring performance"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "Which leadership activity helps an organization remain stable?", "options": ["Maintaining stability", "Avoiding planning", "Removing accountability", "Ignoring resources"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "Effective leadership can help an organization:", "options": ["Foster innovation", "Prevent every new idea", "Avoid change", "Discourage initiative"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "Which leadership element is associated with direction and future change?", "options": ["Vision and change", "Personal consumption", "Stock levels only", "Cash receipts only"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "Which management function involves deciding what the organization wants to achieve?", "options": ["Setting goals", "Recording transactions", "Counting inventory only", "Issuing receipts"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "Good staffing aims to put:", "options": ["The right person in the right job", "Every person in every job", "Only managers in technical jobs", "No one in charge"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "Bookkeeping records primarily help a business track:", "options": ["Financial transactions", "Personal opinions", "Employee hobbies", "Family traditions"], "answer": 0}, {"chapter": "CHAPTER 6", "question": "A fixed asset register is used to keep records of:", "options": ["Fixed assets", "Daily snacks", "Customer opinions", "Advertising slogans"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "Which is a key element of entrepreneurship that supports the creation of new solutions?", "options": ["Innovation", "Fear", "Consumption", "Routine"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "An entrepreneur who introduces a new product or process is demonstrating:", "options": ["Innovation", "Bookkeeping", "Consumption", "Taxation"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "Which activity helps an entrepreneur identify possible opportunities?", "options": ["Opportunity recognition", "Avoiding research", "Ignoring customers", "Reducing information"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "Market research is useful because it helps entrepreneurs:", "options": ["Understand customers and market conditions", "Guarantee success", "Eliminate competition", "Avoid evidence"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "Which factor can support successful entrepreneurial activity?", "options": ["Experience", "Fear of learning", "Ignoring feedback", "Avoiding networks"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "A business opportunity becomes more meaningful when it can:", "options": ["Create value for customers", "Ignore customer needs", "Avoid all change", "Eliminate competition completely"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "Which entrepreneurial quality supports persistence when challenges occur?", "options": ["Resilience", "Indifference", "Fear", "Passivity"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "Networking can help entrepreneurs gain access to:", "options": ["Information, relationships and opportunities", "Only personal expenses", "Only office furniture", "No useful resources"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "Which action can help reduce uncertainty before launching a venture?", "options": ["Conducting research", "Ignoring the market", "Avoiding customers", "Refusing to test ideas"], "answer": 0}, {"chapter": "CHAPTER 7", "question": "Which factor can contribute to entrepreneurial success?", "options": ["Effective opportunity evaluation", "Ignoring feasibility", "Avoiding planning", "Rejecting feedback"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "In business planning, broad desired outcomes are commonly described as:", "options": ["Goals", "Invoices", "Receipts", "Ledgers"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "Which statement best distinguishes objectives from broad goals?", "options": ["Objectives are usually more specific and measurable", "Objectives are always less specific", "Goals are always financial records", "There is no difference"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "A business plan is primarily used to:", "options": ["Guide the direction and development of a business", "Replace all management decisions", "Guarantee profit", "Eliminate competition"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "Which is commonly included in a business plan?", "options": ["Market analysis", "Personal diary entries", "Unrelated stories", "Private entertainment schedules"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "Business plan competitions are another term for:", "options": ["None of the above", "Feasibility studies", "Business accelerators", "Business plans"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "A business plan can help entrepreneurs communicate their:", "options": ["Vision and strategy", "Personal hobbies only", "Private family history", "Unrelated opinions"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "Which activity is important when preparing a business plan?", "options": ["Researching the market", "Ignoring competitors", "Avoiding customers", "Guessing all costs"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "A strong business plan should contain realistic financial:", "options": ["Projections", "Rumours", "Promises", "Personal opinions"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "Which part of a business plan describes the venture and its intended direction?", "options": ["Business description", "Personal diary", "Entertainment plan", "Family history"], "answer": 0}, {"chapter": "CHAPTER 8", "question": "Which approach makes business objectives more useful?", "options": ["Setting specific objectives with strategies", "Leaving objectives undefined", "Using only vague statements", "Avoiding measurable targets"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "The transformation of key business processes through digital technologies is commonly called:", "options": ["Digital transformation", "Traditional bookkeeping", "Manual distribution", "Physical expansion"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "E-business can use the internet for:", "options": ["Communication and business activities", "Only entertainment", "Only banking", "Only advertising"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "Which type of e-commerce involves business-to-business transactions?", "options": ["B2B", "B2C", "C2C", "C2B"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "Which type of e-commerce involves transactions between businesses and consumers?", "options": ["B2C", "B2B", "C2C", "B2G"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "Which type involves consumers selling or exchanging with other consumers?", "options": ["C2C", "B2B", "B2G", "B2C"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "Which is a potential disadvantage of e-commerce?", "options": ["Security and privacy concerns", "Guaranteed physical inspection", "No need for technology", "Elimination of all risks"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "The set of tactical marketing tools blended to produce a desired response from a target market is the:", "options": ["Marketing mix", "Sales ledger", "Production schedule", "Financial statement"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "Which of the following is one of the traditional 4Ps of marketing?", "options": ["Product", "People only", "Process only", "Physical evidence only"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "The actual benefit a buyer expects from a product is called the:", "options": ["Core product", "Augmented product", "Distribution channel", "Communication channel"], "answer": 0}, {"chapter": "CHAPTER 9", "question": "The sum of money needed to supply, sell or purchase a product is its:", "options": ["Price", "Promotion", "Place", "Product"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "The central focus of the market/customer solution concept is:", "options": ["Customer needs and wants", "Only product development", "Only profit maximization", "Only competitor analysis"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "Understanding customer journeys involves studying:", "options": ["Customer interactions with a product or service", "Only employee salaries", "Only tax records", "Only inventory levels"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "AI can be used in business to:", "options": ["Automate repetitive tasks", "Prevent personalization", "Eliminate data analysis", "Stop decision-making"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "The Internet of Things refers to:", "options": ["A network of connected physical devices", "A new software application only", "A type of cloud storage", "A marketing slogan"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "Augmented Reality differs from Virtual Reality because AR:", "options": ["Overlays digital information on the real world", "Always creates a completely virtual world", "Is only used for gaming", "Cannot display digital information"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "Data analytics helps businesses by:", "options": ["Identifying patterns and trends in data", "Removing all data", "Preventing decisions", "Eliminating research"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "Blockchain technology can enhance supply chains by improving:", "options": ["Transparency and traceability", "Only advertising", "Only office design", "Only employee recruitment"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "Cloud computing can offer businesses:", "options": ["Scalability, accessibility and cost-effectiveness", "Only physical storage", "Guaranteed zero risk", "No need for security"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "A major ethical concern associated with AI decision-making is:", "options": ["Bias, privacy and lack of transparency", "Guaranteed fairness", "No need for accountability", "Elimination of all human concerns"], "answer": 0}, {"chapter": "CHAPTER 10", "question": "Virtual Reality can enhance employee training by providing:", "options": ["Immersive and interactive learning experiences", "Only written examinations", "Only financial records", "No practical experience"], "answer": 0}];
+let current = 0;
+let answers = Array(QUESTIONS.length).fill(null);
+let seconds = 50 * 60;
+let timerHandle = null;
+let submitted = false;
+
+function $(id) { return document.getElementById(id); }
+
+function showInstructions() {
+  $('home').classList.add('hidden');
+  $('instructions').classList.remove('hidden');
+}
+
+function startExam() {
+  $('instructions').classList.add('hidden');
+  $('result').classList.add('hidden');
+  $('exam').classList.remove('hidden');
+  current = 0; seconds = 50 * 60; submitted = false;
+  answers = Array(QUESTIONS.length).fill(null);
+  render();
+  clearInterval(timerHandle);
+  timerHandle = setInterval(tick, 1000);
+}
+
+function tick() {
+  seconds--;
+  updateTimer();
+  if (seconds <= 0) submitExam(true);
+}
+
+function updateTimer() {
+  const m = Math.floor(seconds / 60).toString().padStart(2,'0');
+  const s = (seconds % 60).toString().padStart(2,'0');
+  $('timer').textContent = `${m}:${s}`;
+  $('timer').style.background = seconds <= 300 ? '#b42335' : '#111827';
+}
+
+function render() {
+  const q = QUESTIONS[current];
+  $('chapter').textContent = q.chapter;
+  $('counter').textContent = `Question ${current+1} of ${QUESTIONS.length}`;
+  $('question').textContent = `${current+1}. ${q.question}`;
+  $('progress').style.width = `${((current+1)/QUESTIONS.length)*100}%`;
+  const letters = ['A','B','C','D'];
+  $('options').innerHTML = q.options.map((opt,i) => `
+    <label class="option ${answers[current]===i?'selected':''}">
+      <input type="radio" name="answer" value="${i}" ${answers[current]===i?'checked':''}
+        onchange="selectAnswer(${i})">
+      <span><strong>(${letters[i]})</strong> ${escapeHtml(opt)}</span>
+    </label>`).join('');
+  $('answeredText').textContent = `${answers.filter(x=>x!==null).length} answered`;
+  renderGrid();
+  updateTimer();
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+function selectAnswer(i) {
+  answers[current] = i;
+  render();
+}
+
+function nextQuestion() {
+  if (current < QUESTIONS.length-1) { current++; render(); }
+  else { alert('You are on Question 100. Click SUBMIT when you are ready.'); }
+}
+
+function previousQuestion() {
+  if (current > 0) { current--; render(); }
+}
+
+function renderGrid() {
+  $('grid').innerHTML = QUESTIONS.map((q,i) =>
+    `<button class="${i===current?'current ':''}${answers[i]!==null?'answered':''}" onclick="jumpTo(${i})">${i+1}</button>`
+  ).join('');
+}
+
+function jumpTo(i) { current=i; render(); }
+
+function submitExam(autoSubmit) {
+  if (submitted) return;
+  if (!autoSubmit) {
+    const unanswered = answers.filter(x=>x===null).length;
+    const msg = unanswered
+      ? `You still have ${unanswered} unanswered question(s). Submit anyway?`
+      : 'Submit your exam now?';
+    if (!confirm(msg)) return;
+  }
+  submitted = true;
+  clearInterval(timerHandle);
+
+  let correct=0;
+  QUESTIONS.forEach((q,i)=>{ if(answers[i]===q.answer) correct++; });
+  const wrong = answers.filter((a,i)=>a!==null && a!==QUESTIONS[i].answer).length;
+  const unanswered = answers.filter(a=>a===null).length;
+  const pct = Math.round((correct/QUESTIONS.length)*100);
+
+  $('exam').classList.add('hidden');
+  $('result').classList.remove('hidden');
+  $('score').textContent = `${pct}%`;
+  $('correctKpi').textContent = correct;
+  $('wrongKpi').textContent = wrong;
+  $('unansweredKpi').textContent = unanswered;
+  $('resultMessage').textContent = autoSubmit
+    ? 'Time expired. Your answers were submitted automatically.'
+    : 'Your answers have been recorded. Review the questions below.';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showReview() {
+  $('review').classList.remove('hidden');
+  const letters=['A','B','C','D'];
+  $('review').innerHTML = QUESTIONS.map((q,i)=>{
+    const isCorrect = answers[i]===q.answer;
+    const user = answers[i]===null ? 'Not answered' : `(${letters[answers[i]]}) ${escapeHtml(q.options[answers[i]])}`;
+    const correct = `(${letters[q.answer]}) ${escapeHtml(q.options[q.answer])}`;
+    return `<div class="review-item ${isCorrect?'correct':'wrong'}">
+      <strong>${i+1}. ${escapeHtml(q.question)}</strong>
+      <p class="small"><strong>Your answer:</strong> ${user}</p>
+      <p class="small"><strong>Correct answer:</strong> ${correct}</p>
+    </div>`;
+  }).join('');
+}
+
+function restartExam() {
+  $('result').classList.add('hidden');
+  $('instructions').classList.remove('hidden');
+  $('review').classList.add('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
